@@ -1,0 +1,41 @@
+// Your footer style
+
+@media (max-width: 1000px) {
+  #deskopt-footer{
+    display: none;
+  }
+}
+
+@media (min-width: 1000px){
+  #mobile-footer{
+    display:none;
+  }
+}
+
+.footer-container{
+  background-color: $brand-color;
+}
+#footer{
+  padding: 50px 0px;
+  height: auto;
+  p{
+    color: white;
+    font-size: 14px;
+    font-family: 'Source sans pro';
+  }
+  h4{
+    color: white;
+  }
+  a{
+    color: white;
+    text-decoration: none;
+     &:hover{
+      color: white;
+      opacity: 0.5;
+      text-decoration: none;
+    }
+  }
+  .li-social{
+    margin-bottom: -25px;
+  }
+}

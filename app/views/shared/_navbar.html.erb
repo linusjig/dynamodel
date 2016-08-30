@@ -1,0 +1,119 @@
+
+<div class="navbar-black">
+  <!-- Logo -->
+  <%= link_to root_path, class: "navbar-black-brand brand-xs" do %>
+    <%= image_tag "dynamodel-black.png" %>
+  <% end %>
+
+  <!-- Right Navigation -->
+  <div class="navbar-black-right hidden-xs hidden-sm">
+
+    <%= link_to "Women", page_mannequin_women_path%>
+    <%= link_to "Men", page_mannequin_men_path%>
+    <%= link_to "Join Dyna", new_user_registration_path %>
+    <%= link_to "Contact", page_contact_path%>
+
+    <!-- Different navigation if login or not -->
+    <% if user_signed_in? %>
+
+      <!-- Notification -->
+      <%= link_to "#", class: "navbar-black-item navbar-black-link" do %>
+        <div class="badge-container">
+          <i class="fa fa-envelope-o"></i>
+          <div class="badge badge-blue">3</div>
+        </div>
+      <% end %>
+
+      <!-- Profile picture and dropdown -->
+      <div class="navbar-black-item">
+        <div class="dropdown">
+          <% if user_signed_in? && current_user.facebook_picture_url %>
+          <%= image_tag current_user.facebook_picture_url, class: "avatar dropdown-toggle", id: " navbar-black-menu", "data-toggle" => "dropdown" %>
+          <% else  %>
+          <%= image_tag "http://placehold.it/30x30", class: "avatar dropdown-toggle", id:"navbar-black-menu", "data-toggle" => "dropdown" %>
+          <% end %>
+
+          <ul class="dropdown-menu dropdown-menu-right navbar-black-dropdown-menu">
+            <li>
+              <%= link_to "/" do %>
+                <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
+              <% end %>
+            </li>
+            <% if current_user.mannequin %>
+              <li>
+            <!-- mannequin can only see self (notice sg, no id get's passed) -->
+                <%= link_to mannequin_path(current_user.mannequin), target: "_blank" do %>
+                  <i class="fa fa-user"></i> <%= t(".profile", default: "Profile") %>
+                <% end %>
+              </li>
+            <% else %>
+              <li>
+            <!-- client can only edit self (notice sg, no id get's passed) -->
+                <%= link_to client_path do %>
+                  <i class="fa fa-user"></i>  <%= t(".profile", default: "Profile") %>
+                <% end %>
+             </li>
+            <% end %>
+            <% if current_user.mannequin %>
+              <li>
+            <!-- mannequin can only edit self (notice sg, no id get's passed) -->
+             <%= link_to edit_mannequin_path do %>
+                <i class="fa fa-pencil"></i>  <%= t(".profile", default: "Edit Profile") %>
+              <% end %>
+            </li>
+            <% else %>
+              <li>
+            <!-- client can only edit self (notice sg, no id get's passed) -->
+             <%= link_to edit_client_path do %>
+                <i class="fa fa-pencil"></i>  <%= t(".profile", default: "Edit Profile") %>
+              <% end %>
+             </li>
+            <% end %>
+            <li>
+              <%= link_to "/users/edit" do %>
+                <i class="fa fa-cog"></i>  <%= t(".profile", default: "Settings") %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, method: :delete do %>
+                <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    <% else %>
+
+      <!-- Login text link -->
+      <%= link_to t(".sign_in", default: "Login"), new_user_session_path %>
+
+    <% end %>
+  </div>
+
+  <!-- Dropdown list appearing on mobile only -->
+  <div class="navbar-black-item hidden-md hidden-lg">
+    <div class="dropdown">
+      <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
+      <ul class="dropdown-menu dropdown-menu-right navbar-black-dropdown-menu">
+        <li><a href="#">Women</a></li>
+        <li><a href="#">Men</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">How to use</a></li>
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <i class="fa fa-sign-out"></i>  <%= t(".sign_out", default: "Log out") %>
+            <% end %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to t(".sign_in", default: "Login"), new_user_session_path %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
